@@ -78,6 +78,14 @@ public class Main implements Runnable, ActionListener{
     validateButton.setBounds(330, 10, 100, 35);
     resetButton.setBounds(330, 55, 100, 35);
 
+    // add an action listener to the buttons
+    validateButton.addActionListener(this);
+    resetButton.addActionListener(this);
+
+    // set the action command on the buttons
+    validateButton.setActionCommand("validate");
+    resetButton.setActionCommand("reset");
+
     // add the JButtons to the main panel
     mainPanel.add(validateButton);
     mainPanel.add(resetButton);
@@ -117,10 +125,52 @@ public class Main implements Runnable, ActionListener{
 
   }
 
+  // checks to see if a triangle is validate given the length of side a, b and c
+  public boolean isValidTriangle(int a, int b, int c){
+    // checks using the triangle inequality
+    if(a+b > c && a+c > b && b+c > a){
+      // valid triangle
+      return true;
+    }else{
+      // invalid triaangle
+      return false;
+    }
+
+  }
+
   // method called when a button is pressed
   public void actionPerformed(ActionEvent e){
     // get the command from the action
     String command = e.getActionCommand();
+
+    if(command.equals("validate")){
+      // get the text from each text box
+      String firstText = firstInput.getText();
+      String secondText = secondInput.getText();
+      String thirdText = thirdInput.getText();
+
+      // change the string into an integer
+      int sideA = Integer.parseInt(firstText);
+      int sideB = Integer.parseInt(secondText);
+      int sideC = Integer.parseInt(thirdText);
+
+      // using a method to check if the traingle is valid
+      boolean isValid = isValidTriangle(sideA, sideB, sideC);
+      // ouput the answer to the user
+      if(isValid){
+        outputArea.setText("This is a valid traingle");
+      }else{
+        outputArea.setText("This is an invalid traingle");
+      }
+    
+
+    }else if(command.equals("reset")){
+      // clear all of the etxt in the text boxes
+      firstInput.setText("");
+      secondInput.setText("");
+      thirdInput.setText("");
+      outputArea.setText("");
+    }
 
   }
 
